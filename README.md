@@ -1,126 +1,113 @@
-Smart Room Comfort Reminder System (ESP32-C3 XIAO)
+**Smart Room Comfort Reminder System
 
-A simple IoT-based room comfort monitoring system using the Seeed Studio XIAO ESP32-C3, DHT11 sensor, LED, Buzzer, and Push Button.
-This system monitors temperature and humidity and alerts the user when the room becomes uncomfortable.
+(ESP32-C3 + DHT11 + LED + Buzzer + Push Button)**
 
-Project Overview
+This project is a simple embedded reminder system built using the XIAO ESP32-C3 microcontroller. It continuously monitors temperature and humidity using a DHT11 sensor and alerts the user through an LED and buzzer when comfort limits are exceeded. A push button allows the user to clear the alarm manually.
 
-This project measures room temperature and humidity using a DHT11 sensor.
-If the values exceed a defined threshold, the system:
+This project was developed for my AES coursework submission.
 
-Activates LED blinking
+Features
 
-Activates buzzer alarm
+Reads temperature and humidity every 2 seconds
 
-Logs warning messages to the serial monitor
+Triggers an alarm when:
 
-Allows alarm silence using a push button
+Temperature rises above the limit
 
-This serves as a simple embedded system, sensor integration, and alert mechanism demonstration suitable for coursework.
+Humidity drops below the limit
 
-Hardware Used
-Component	Purpose
-Seeed Studio XIAO ESP32-C3	Microcontroller running the system
-DHT11 sensor (Grove-type)	Reads temperature & humidity
-LED	Visual alert (blinks on alarm)
-Buzzer	Audible alarm
-Push Button	User input to silence alarm
-Jumper wires	Connections
-🛠 Pin Connections
-Component	XIAO ESP32-C3 Pin
-DHT11 - Signal	D0 → GPIO2
-LED	D2 → GPIO4
-Buzzer	D3 → GPIO5
-Push Button	D1 → GPIO3
-3V3 / GND	To respective components
-Threshold Settings
+LED blinks and buzzer turns ON during alarm
 
-You can adjust the alert levels in the code:
+Push button resets the alarm
 
-#define TEMP_LIMIT_C      31   // Trigger alarm above 31°C
-#define HUMIDITY_LOW_PCT  40   // Trigger alarm below 40% RH
+Uses a custom DHT11 driver
+
+Fully implemented in ESP-IDF (C) on XIAO ESP32-C3
+
+Hardware Connections
+
+DHT11 signal connected to D0 (GPIO2)
+
+LED connected to D2 (GPIO4)
+
+Buzzer connected to D3 (GPIO5)
+
+Push button connected to D1 (GPIO3)
+
+Power provided via 3V3 and GND pins
+
+Thresholds Used
+
+Temperature limit: 31°C
+
+Humidity limit: 40% RH
+
+System raises an alarm when temperature exceeds the limit or humidity drops below it
 
 System Behaviour
-Normal Mode
 
-LED OFF
+Under normal conditions, LED and buzzer remain OFF
 
-Buzzer OFF
+If temperature or humidity crosses the threshold:
 
-Sensor readings logged every 2 seconds
+LED begins blinking
 
-Alarm Mode
+Buzzer turns ON
 
-Triggered when:
+A warning message is printed on the serial monitor
 
-Temperature > threshold, OR
+When the push button is pressed:
 
-Humidity < threshold
+The alarm turns OFF
 
-System actions:
+LED and buzzer return to idle state
 
-LED blinks every 200 ms
+How the System Works
 
-Buzzer ON
+The system initializes all GPIO pins at startup.
 
-Warning printed in Serial Monitor
+Every 2 seconds, the DHT11 sensor is read.
 
-Silencing the Alarm
+The temperature and humidity values are printed to the serial monitor.
 
-Press the button → alarm resets.
+If comfort levels are exceeded, an alarm is activated.
 
-Code Structure
+The push button allows the user to silence the alarm.
 
-Main logic located in:
+How to Build and Flash (ESP-IDF)
 
-/main/main.c
+Open the project in VS Code with the ESP-IDF extension installed.
 
-
-Contains:
-
-Custom DHT11 driver
-
-GPIO configuration
-
-Alert logic
-
-Main loop (100ms cycle)
-
-How to Build & Flash
-
-Open the project in VS Code with ESP-IDF extension
-
-Connect XIAO ESP32-C3 via USB
+Select the correct target (ESP32-C3).
 
 Click:
 
-ESP-IDF: Build
-ESP-IDF: Flash
-ESP-IDF: Monitor
+Build Project
 
+Flash Device
 
-Reset board → system starts automatically
+Monitor Device
 
-Sample Log Output
-I (1234) ROOM_REMINDER: DHT11 OK - Temp: 32 C, Humidity: 38 %
-W (1235) ROOM_REMINDER: Comfort limit exceeded! Alarm ON
-I (2345) ROOM_REMINDER: Button pressed: Alarm cleared
+Reset the board to start the program.
 
-Demo Video
+Project Structure
 
-A video demonstrating hardware setup and functionality is included separately as part of the submitted coursework.
+main/main.c – contains the complete application logic
 
-Repository Structure
-reminder_system/
- ├── main/
- │   ├── main.c
- │   └── CMakeLists.txt
- ├── README.md
- ├── sdkconfig
- └── .gitignore
+main/CMakeLists.txt – build configuration
+
+sdkconfig – ESP-IDF configuration file
+
+.gitignore and other workspace settings
+
+README.md – documentation
+
+Coursework Summary
+
+The Smart Room Comfort Reminder System is designed to measure temperature and humidity and produce an audio-visual warning when comfort levels fall outside acceptable ranges. This project demonstrates sensor integration, GPIO control, and basic embedded system design using ESP-IDF.
 
 Author
 
 Theevashini Thankaraj
-Master of Electronic Engineering Systems
-
+GitHub Repository:
+👉 https://github.com/Theeva07/reminder_system
